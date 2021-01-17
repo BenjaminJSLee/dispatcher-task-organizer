@@ -1,21 +1,38 @@
 import React from 'react';
-import { Map, GoogleApiWrapper } from 'google-maps-react';
+import Map from 'google-map-react';
+import './MapContainer.scss'
 
 const MapContainer  = (props: any) => {
+
+  const renderPaths = (map: object, maps: any) => {
+    for (const movement of props.movements) {
+      const path = new maps.Polyline({
+        path: [movement.start, movement.end]
+      });
+      path.setMap(map);
+    }
+  }
+
+  const handleAPILoaded = (map: object, maps: any) => {
+    renderPaths(map,maps);
+  };
+
   return (
-    <Map
-      google={props.google}
-      zoom={14}
-      initialCenter={
-        {
-          lat: -1.2884,
-          lng: 36.8233
+    <div className="map-container">
+      <Map
+        yesIWantToUseGoogleMapApiInternals
+        bootstrapURLKeys={{ key: ""/* process.env.REACT_APP_MAPS_API_KEY */ }}
+        defaultCenter={
+          {
+            lat: -1.2884,
+            lng: 36.8233
+          }
         }
-      }
-    />
+        defaultZoom={14}
+        onGoogleApiLoaded={({ map, maps }) => handleAPILoaded(map, maps)}
+      >
+      </Map>
+    </div>
   );
 }
-
-export default GoogleApiWrapper({
-  apiKey: `${""/*process.env.REACT_APP_MAPS_API_KEY*/}`
-})(MapContainer);
+export default MapContainer;
