@@ -1,19 +1,113 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Map from 'google-map-react';
 import './MapContainer.scss'
 
-const MapContainer  = (props: any) => {
+interface Path {
+  start: google.maps.Marker,
+  end: google.maps.Marker,
+  line: google.maps.Polyline,
+}
 
-  const renderPaths = (map: object, maps: any) => {
+const MapContainer  = (props: any) => {
+  const [paths, setPaths]: [{[key: number]: Path}, Function] = useState([]);
+
+  const createPath = (movement: any, map: any, maps: any) => {
+    const line = new maps.Polyline({
+      map,
+      path: [movement.start, movement.end],
+      strokeOpacity: 1,
+      strokeColor: movement.color,
+      icons: [{
+        icon: {
+          path: 'M -0.75,0 0,-1.5 0.75,0 Z',
+          strokeColor: movement.color,
+          strokeOpacity: 1,
+          scale: 4
+        },
+        offset: '0',
+        repeat: '20px'
+      }],
+    });
+    const start = new google.maps.Marker({
+      map,
+      position: movement.start,
+      title: "start",
+      label: "S",
+      // icon: {
+      //   path: google.maps.SymbolPath.CIRCLE,
+      //   scale: 7,
+      // },
+    });
+    const end = new google.maps.Marker({
+      map,
+      position: movement.end,
+      title: "end",
+      label: "E",
+      // icon: {
+      //   path: google.maps.SymbolPath.CIRCLE,
+      //   scale: 7,
+      // },
+    });
+
+    animatePath(line);
+
+    return {
+      line,
+      start,
+      end,
+    };
+  };
+
+  const updatePath = (movement: any) => {
+    setPaths((prev: {[key: number]: Path}) => {
+      const { start, end, line } = prev[movement.id];
+      start.setPosition(movement.start);
+      end.setPosition(movement.end);
+      return {
+        ...prev,
+        [movement.id]: {
+          start,
+          end,
+          line,
+        }
+      };
+    });
+  };
+
+  const deletePath = (id: number) => {
+    setPaths((prev: {[key: number]: Path}) => {
+      const path: Path = prev[id];
+      path.start.setMap(null);
+      path.end.setMap(null);
+      path.line.setMap(null);
+      return {
+        ...prev,
+        [id]: undefined,
+      };
+    })
+  };
+
+  const animatePath = (line: google.maps.Polyline) => {
+    let count = 100;
+    setInterval(() => {
+      count = (count + 1) % 100;
+
+      const icons = line.get("icons");
+      icons[0].offset = count + "px";
+      line.set("icons", icons);
+    }, 40);
+  };
+
+  const renderPaths = (map: any, maps: any) => {
+    const pathObject: {[key: number]: Path} = {};
     for (const movement of props.movements) {
-      const path = new maps.Polyline({
-        path: [movement.start, movement.end]
-      });
-      path.setMap(map);
+      pathObject[movement.id] = createPath(movement, map, maps);
     }
-  }
+    setPaths(pathObject);
+  };
 
   const handleAPILoaded = (map: object, maps: any) => {
+    
     renderPaths(map,maps);
   };
 

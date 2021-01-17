@@ -6,8 +6,8 @@ import MapContainer from './components/MapContainer';
 const data = [
   { 
     id: 1,
-    start: { lat: 100.0001, lng: 100.0001},
-    end: { lat: 101.0001, lng: 100.0001},
+    start: { lat: 20.0001, lng: 20.0001},
+    end: { lat: 21.0001, lng: 20.0001},
     color: "#FFFFFF",
     description: "",
   },
@@ -26,7 +26,8 @@ function App() {
       <MapContainer
         movements={data}
       >
-        
+        <div>start</div>
+        <div>end</div>
       </MapContainer>
     </div>
   );
