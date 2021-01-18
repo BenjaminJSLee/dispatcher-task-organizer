@@ -15,14 +15,9 @@ const MovementList = (props: any) => {
   });
 
   return (
-    <>
     <div className="movement-list">
       {movements}
     </div>
-    <button>Add</button>
-    <button>Edit</button>
-    <button>Delete</button>
-    </>
   );
 };
 
