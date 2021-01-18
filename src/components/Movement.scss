@@ -1,9 +1,21 @@
 .movement {
-  padding-top: 1em;
-  padding-bottom: 1em;
-  border: 1px solid black;
+  font-family: "verdana";
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.5em;
+  margin: 0.1em;
+  cursor: pointer;
+  > * {
+    padding: 0.5em;
+    margin-left: 1em;
+  }
   > header {
-    padding: 0.2em;
-    border-bottom: 1px solid black;
+    font-weight: bold;
+    border-bottom: 0.2em solid;
+    > * {
+      padding-top: 0.4em;
+      padding-bottom: 0.4em;
+    }
   }
 }
