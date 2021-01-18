@@ -6,7 +6,8 @@ function App() {
   return (
     <div>
       <Movement 
-      selected
+        selected
+        onClick={null}
         movement={{
           id: 1,
           start: {lat: 2.0001, lng: 1.0011},
@@ -16,6 +17,7 @@ function App() {
         }}
       />
       <Movement 
+        onClick={null}
         movement={{
           id: 2,
           start: {lat: 2.0001, lng: 1.0011},
