@@ -15,7 +15,7 @@ interface IMovement {
 
 }
 
-const Movement = (props: { selected?: boolean, movement: IMovement}) => {
+const Movement = (props: { onClick: any, selected?: boolean, movement: IMovement}) => {
 
   const colorScheme = {
     background: `#ffffff linear-gradient(90deg,${props.movement.color},${props.movement.color} 1em, ${props.movement.color}37 0) padding-box`,
@@ -27,7 +27,7 @@ const Movement = (props: { selected?: boolean, movement: IMovement}) => {
   };
 
   return (
-    <div className="movement" style={colorScheme}>
+    <div className="movement" style={colorScheme} onClick={props.onClick}>
       <header style={{borderColor: props.movement.color}}>
         <div>Pick-up (S) at {formatLatLng(props.movement.start)}</div>
         <div>Drop-off (E) at {formatLatLng(props.movement.end)}</div>
