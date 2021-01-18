@@ -1,4 +1,10 @@
 .movement-list {
   display: flex;
   flex-direction: column;
+  padding: 0.5em;
+  border: 0.15em solid black;
+  > * {
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+  }
 }
