@@ -1,0 +1,24 @@
+.movement {
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.5em;
+  margin: 0.1em;
+  overflow-wrap: break-word;
+  cursor: pointer;
+  > * {
+    padding: 0.5em;
+    margin-left: 1em;
+  }
+  > header {
+    font-weight: bold;
+    border-bottom: 0.2em solid;
+    > * {
+      padding-top: 0.4em;
+      padding-bottom: 0.4em;
+    }
+  }
+  &:hover {
+    filter: brightness(110%);
+  }
+}

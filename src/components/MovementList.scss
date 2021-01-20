@@ -1,0 +1,15 @@
+.movement-list {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 0.5em;
+  border: 0.2em solid #dcdcdc;
+  border-radius: 0.15em;
+  overflow: auto;
+  background-image: url("./images/hoffman.png");
+  background-color: #f8f8ff;
+  > * {
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+  }
+}
