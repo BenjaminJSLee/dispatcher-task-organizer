@@ -6,7 +6,6 @@ import Button from './Button';
 import './MovementController.scss';
 import Confirm from './Confirm';
 import MovementForm from './MovementForm';
-import { verify } from 'crypto';
 
 const READ = "READ";
 const EDIT = "EDIT";
