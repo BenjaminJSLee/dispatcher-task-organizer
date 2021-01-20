@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import MovementList from './MovementList';
+import Movement from './Movement';
 import Button from './Button';
 
 import './MovementController.scss';
+import Confirm from './Confirm';
 
 const READ = "READ";
 const FORM = "FORM";
@@ -10,7 +12,14 @@ const DELETE = "DELETE";
 
 const MovementController = (props: any) => {
 
-  const [view, setView] = useState("READ")
+  const [view, setView] = useState(READ);
+
+  const remove = (selected: number | null) => {
+    if (selected !== null) {
+      props.removeMovement(selected);
+    }
+    setView(READ);
+  };
 
   return (
     <div className="movement-controller">
@@ -45,14 +54,16 @@ const MovementController = (props: any) => {
         </>
       }
       { view === DELETE &&
-        <>
-          <Button
-            onClick={() => setView(READ)}
-          >CANCEL</Button>
-          <Button danger
-            onClick={() => setView(READ)}
-          >CONFIRM</Button>
-        </>
+        <Confirm
+          onConfirm={() => remove(props.selected)}
+          onCancel={() => setView(READ)}
+          message={"Delete the selected movement?"}
+        >
+          <Movement 
+            onClick={null} 
+            movement={props.movements.find(({id}: { id: number }) => id === props.selected)}
+          />
+        </Confirm>
       }
     </div>
   );
