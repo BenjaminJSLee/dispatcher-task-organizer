@@ -5,20 +5,45 @@ import Button from './Button';
 
 import './MovementController.scss';
 import Confirm from './Confirm';
+import MovementForm from './MovementForm';
+import { verify } from 'crypto';
 
 const READ = "READ";
-const FORM = "FORM";
+const EDIT = "EDIT";
+const NEW = "NEW";
 const DELETE = "DELETE";
+
+interface ILatLng {
+  lat: number;
+  lng: number;
+}
+
+interface IMovement {
+  id: number,
+  start: ILatLng,
+  end: ILatLng,
+  description: string,
+  color: string;
+
+}
 
 const MovementController = (props: any) => {
 
   const [view, setView] = useState(READ);
+
+  const verify = (movement: IMovement) => {
+    return false;
+  };
 
   const remove = (selected: number | null) => {
     if (selected !== null) {
       props.removeMovement(selected);
     }
     setView(READ);
+  };
+
+  const save = (movement: IMovement) => {
+    if(!verify(movement)) return;
   };
 
   return (
@@ -32,10 +57,10 @@ const MovementController = (props: any) => {
         /> 
         <div className="button-list">
           <Button success
-            onClick={() => setView(FORM)}
+            onClick={() => setView(NEW)}
           >ADD</Button>
           <Button warning disabled={props.selected === null}
-            onClick={() => setView(FORM)}
+            onClick={() => setView(EDIT)}
           >EDIT</Button>
           <Button danger disabled={props.selected === null}
             onClick={() => setView(DELETE)}
@@ -43,15 +68,19 @@ const MovementController = (props: any) => {
         </div>
       </>
       }
-      { view === FORM &&
-        <>
-          <Button
-            onClick={() => setView(READ)}
-          >BACK</Button>
-          <Button success
-            onClick={() => setView(READ)}
-          >SAVE</Button>
-        </>
+      { view === NEW &&
+        <MovementForm
+          movement={null}
+          onBack={() => setView(READ)}
+          onSave={save}
+        />
+      }
+      { view === EDIT &&
+        <MovementForm
+          movement={props.movements.find(({id}: { id: number }) => id === props.selected)}
+          onBack={() => setView(READ)}
+          onSave={save}
+        />
       }
       { view === DELETE &&
         <Confirm
