@@ -4,7 +4,7 @@ import MovementController from './components/MovementController';
 
 function App() {
 
-  const [selected, setSelected] = useState(1);
+  const [selected, setSelected] = useState(null);
 
   const data = [
     { 
