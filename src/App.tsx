@@ -25,10 +25,7 @@ function App() {
     <div>
       <MapContainer
         movements={data}
-      >
-        <div>start</div>
-        <div>end</div>
-      </MapContainer>
+      />
     </div>
   );
 }
