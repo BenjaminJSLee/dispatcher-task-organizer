@@ -22,13 +22,13 @@ const MovementController = (props: any) => {
           setSelected={props.setSelected}
         /> 
         <div className="button-list">
-          <Button add
+          <Button success
             onClick={() => setView(FORM)}
           >ADD</Button>
-          <Button edit disabled={props.selected === null}
+          <Button warning disabled={props.selected === null}
             onClick={() => setView(FORM)}
           >EDIT</Button>
-          <Button delete disabled={props.selected === null}
+          <Button danger disabled={props.selected === null}
             onClick={() => setView(DELETE)}
           >DELETE</Button>
         </div>
@@ -39,7 +39,7 @@ const MovementController = (props: any) => {
           <Button
             onClick={() => setView(READ)}
           >BACK</Button>
-          <Button add
+          <Button success
             onClick={() => setView(READ)}
           >SAVE</Button>
         </>
