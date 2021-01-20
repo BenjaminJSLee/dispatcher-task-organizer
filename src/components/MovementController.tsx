@@ -31,7 +31,7 @@ const MovementController = (props: any) => {
   const [view, setView] = useState(READ);
 
   const verify = (movement: IMovement) => {
-    return false;
+    return true;
   };
 
   const remove = (selected: number | null) => {
@@ -43,6 +43,8 @@ const MovementController = (props: any) => {
 
   const save = (movement: IMovement) => {
     if(!verify(movement)) return;
+    props.addMovement(movement);
+    setView(READ);
   };
 
   return (

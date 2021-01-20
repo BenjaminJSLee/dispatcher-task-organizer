@@ -4,6 +4,7 @@
   flex-direction: column;
   border-radius: 0.5em;
   margin: 0.1em;
+  overflow-wrap: break-word;
   cursor: pointer;
   > * {
     padding: 0.5em;

@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import Button from './Button';
 
+import './MovementForm.scss';
+
 const MovementForm = (props: any) => {
 
   const [opts, setOpts] = useState(props.movement || {
     id: null,
     start: { lat: 0, lng: 0 },
     end: { lat: 0, lng: 0 },
-    color: "",
+    color: "#000000",
     description: "",
   });
 
@@ -28,12 +30,16 @@ const MovementForm = (props: any) => {
           key = "end";
           val = { lat: change, lng: prev.end.lng };
           break;
-        case "END:LONG":
+        case "END:LNG":
           key = "end";
           val = { lat: prev.end.lat, lng: change };
           break;
         case "DESCRIPTION":
           key = "description";
+          val = change;
+          break;
+        case "COLOR":
+          key = "color";
           val = change;
           break;
       }
@@ -45,51 +51,73 @@ const MovementForm = (props: any) => {
     });
   };
 
+  const handleSubmit = (opts: any) => {
+    props.onSave(opts);
+  };
+
   return (
     <div>
       <div className="movement-form">
         <div className="latlng-form">
-          <h1>Start Point</h1>
-          <label>Latitude</label>
-          <input 
-            type="number"
-            value={opts.start.lat}
-            onChange={(e) => handleChange(e.target.value, "START:LAT")}
-          />
-          <label>Longitude</label>
-          <input 
-            type="number"
-            value={opts.start.lng}
-            onChange={(e) => handleChange(e.target.value, "START:LNG")}
-          />
+          <h4>Start Point</h4>
+          <div>
+            <label>Latitude</label>
+            <input 
+              type="number"
+              value={opts.start.lat}
+              onChange={(e) => handleChange(e.target.value, "START:LAT")}
+            />
+          </div>
+          <div>
+            <label>Longitude</label>
+            <input 
+              type="number"
+              value={opts.start.lng}
+              onChange={(e) => handleChange(e.target.value, "START:LNG")}
+            />
+          </div>
         </div>
         <div className="latlng-form">
-          <h1>End Point</h1>
-          <label>Latitude</label>
-          <input 
-            type="number"
-            value={opts.end.lat}
-            onChange={(e) => handleChange(e.target.value, "END:LAT")}
-          />
-          <label>Longitude</label>
-          <input 
-            type="number"
-            value={opts.end.lng}
-            onChange={(e) => handleChange(e.target.value, "END:LNG")}
+          <h4>End Point</h4>
+          <div>
+            <label>Latitude</label>
+            <input 
+              type="number"
+              value={opts.end.lat}
+              onChange={(e) => handleChange(e.target.value, "END:LAT")}
+            />
+          </div>
+          <div>
+            <label>Longitude</label>
+            <input 
+              type="number"
+              value={opts.end.lng}
+              onChange={(e) => handleChange(e.target.value, "END:LNG")}
+            />
+          </div>
+        </div>
+        <div>
+          <label><h4>Description</h4></label>
+          <textarea
+            value={opts.description}
+            onChange={(e) => handleChange(e.target.value, "DESCRIPTION")}
           />
         </div>
-        <label>Description</label>
-        <textarea
-          value={opts.description}
-          onChange={(e) => handleChange(e.target.value, "DESCRIPTION")}
-        />
+        <div>
+          <label><h4>Color</h4></label>
+          <input 
+            type="color"
+            value={opts.color}
+            onChange={(e) => handleChange(e.target.value, "COLOR")}
+          />
+        </div>
       </div>
       <div className="button-list">
         <Button
           onClick={props.onBack}
         >BACK</Button>
         <Button success
-          onClick={() => props.onSave()}
+          onClick={() => handleSubmit(opts)}
         >SAVE</Button>
       </div>
     </div>

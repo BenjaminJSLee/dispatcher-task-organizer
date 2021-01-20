@@ -31,6 +31,17 @@ function App() {
   const [selected, setSelected] = useState(null);
   const [movements, setMovements] = useState(data);
 
+  const addMovement = (movement: any) => {
+    const id = movement.id || movements.length + 1;
+    setMovements((prev: any) => {
+      return [
+        { ...movement, id, },
+        ...prev.filter((movement: any) => movement.id !== id),
+      ];
+    });
+
+  };
+
   const removeMovement = (id: number) => {
     const newMovements = movements.filter((movement) => movement.id !== id);
     setMovements(newMovements);
@@ -43,6 +54,7 @@ function App() {
         movements={movements}
         selected={selected}
         setSelected={setSelected}
+        addMovement={addMovement}
         removeMovement={removeMovement}
       />
     </div>
