@@ -48,10 +48,10 @@ const MovementController = (props: any) => {
         <>
           <Button
             onClick={() => setView(READ)}
-          >BACK</Button>
-          <Button add
+          >CANCEL</Button>
+          <Button danger
             onClick={() => setView(READ)}
-          >SAVE</Button>
+          >CONFIRM</Button>
         </>
       }
     </div>
