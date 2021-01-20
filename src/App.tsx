@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.scss';
-import MovementList from './components/MovementList';
+import MovementController from './components/MovementController';
 
 function App() {
 
@@ -30,7 +30,7 @@ function App() {
 
   return (
     <div>
-      <MovementList
+      <MovementController
         movements={data}
       />
     </div>
