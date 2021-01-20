@@ -1,29 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.scss';
 import MovementController from './components/MovementController';
 
 function App() {
+
+  const [selected, setSelected] = useState(1);
 
   const data = [
     { 
       id: 1,
       start: { lat: 20.0001, lng: 20.0001},
       end: { lat: 21.0001, lng: 20.0001},
-      color: "#FF0000",
+      color: "#cc0000",
       description: "Material delivery to Fake St, Toronto, Ontario",
     },
     { 
       id: 2,
       start: { lat: -1.2884, lng: 36.8233},
       end: { lat: 0, lng: 37.8233},
-      color: "#00FF00",
+      color: "#00cc00",
       description: "Material delivery to Fake St, Toronto, Ontario",
     },
     { 
       id: 3,
       start: { lat: -2.2884, lng: 36.8233},
       end: { lat: 0, lng: 37.8233},
-      color: "#0000FF",
+      color: "#0000cc",
       description: "Material delivery to Fake St, Toronto, Ontario",
     },
   ];
@@ -32,6 +34,8 @@ function App() {
     <div>
       <MovementController
         movements={data}
+        selected={selected}
+        setSelected={setSelected}
       />
     </div>
   );
