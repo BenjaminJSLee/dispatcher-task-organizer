@@ -30,6 +30,7 @@ const createPath = (movement: any, map: any, maps: any) => {
     position: movement.start,
     title: "start",
     label: "S",
+    animation: google.maps.Animation.DROP,
     // icon: {
     //   path: google.maps.SymbolPath.CIRCLE,
     //   scale: 7,
@@ -40,13 +41,12 @@ const createPath = (movement: any, map: any, maps: any) => {
     position: movement.end,
     title: "end",
     label: "E",
+    animation: google.maps.Animation.DROP,
     // icon: {
     //   path: google.maps.SymbolPath.CIRCLE,
     //   scale: 7,
     // },
   });
-
-  animatePath(line);
 
   return {
     line,
@@ -57,7 +57,7 @@ const createPath = (movement: any, map: any, maps: any) => {
 
 const animatePath = (line: google.maps.Polyline) => {
   let count = 100;
-  setInterval(() => {
+  return setInterval(() => {
     count = (count + 1) % 100;
 
     const icons = line.get("icons");
@@ -136,9 +136,11 @@ const MapContainer  = (props: any) => {
     if (path !== undefined && curMap !== null) {
       const start: any = path.start.getPosition();
       const end: any = path.end.getPosition();
+      const animation = animatePath(path.line);
       const bounds = new google.maps.LatLngBounds(start).extend(end);
       curMap.fitBounds(bounds);
-      curMap.panToBounds(bounds, 100);
+      curMap.panToBounds(bounds, 200);
+      return () => clearInterval(animation);
     };
   }, [props.selected, paths, map])
 
