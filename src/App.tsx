@@ -27,13 +27,15 @@ const data = [
   },
 ];
 
+let created_movements = 3;  // Would usually get an id from the DB
+
 function App() {
 
   const [selected, setSelected] = useState(null);
   const [movements, setMovements] = useState(data);
 
   const addMovement = (movement: any) => {
-    const id = movement.id || movements.length + 1;
+    const id = movement.id || ++created_movements;
     setMovements((prev: any) => {
       return [
         { ...movement, id, },
