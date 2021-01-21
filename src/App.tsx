@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './App.scss';
-import './components/MapContainer'
 import MapContainer from './components/MapContainer';
 import MovementController from './components/MovementController';
 
@@ -51,9 +50,10 @@ function App() {
   };
 
   return (
-    <div>
+    <main>
       <MapContainer
-        movements={data}
+        selected={selected}
+        movements={movements}
       />
       <MovementController
         movements={movements}
@@ -62,7 +62,7 @@ function App() {
         addMovement={addMovement}
         removeMovement={removeMovement}
       />
-    </div>
+    </main>
   );
 }
 

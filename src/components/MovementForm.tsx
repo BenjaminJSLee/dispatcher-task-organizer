@@ -51,8 +51,18 @@ const MovementForm = (props: any) => {
     });
   };
 
+  const cleanInput = (opts: any) => {
+    const cleanedOpts = { ...opts };
+    cleanedOpts.start = { lat: Number(opts.start.lat), lng: Number(opts.start.lng) };
+    cleanedOpts.end = { lat: Number(opts.end.lat), lng: Number(opts.end.lng) };
+    cleanedOpts.description = opts.description.trim();
+
+    return cleanedOpts;
+  };
+
   const handleSubmit = (opts: any) => {
-    props.onSave(opts);
+    const cleanOpts = cleanInput(opts);
+    props.onSave(cleanOpts);
   };
 
   return (
