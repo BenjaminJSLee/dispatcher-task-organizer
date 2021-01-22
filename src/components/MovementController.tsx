@@ -26,12 +26,23 @@ interface IMovement {
 
 }
 
+const areMovementsEqual = (a: IMovement, b: IMovement) => {
+  const sameStart = a.start.lat === b.start.lat && a.start.lng === b.start.lng;
+  const sameEnd = a.end.lat === b.end.lat && a.end.lng === b.end.lng;
+  const sameDesc = a.description === b.description;
+  return sameStart && sameEnd && sameDesc;
+};
+
 const MovementController = (props: any) => {
 
   const [view, setView] = useState(READ);
+  const [error, setError] = useState("");
 
   const verify = (movement: IMovement) => {
-    return true;
+    if (movement.start.lat === movement.end.lat && movement.start.lng === movement.end.lng) return "starting and ending points cannot be the same";
+    const found = props.movements.find((m: IMovement) => m.id !== movement.id && areMovementsEqual(m, movement));
+    if (found) return "given movement data already exists";
+    return "";
   };
 
   const remove = (selected: number | null) => {
@@ -42,9 +53,15 @@ const MovementController = (props: any) => {
   };
 
   const save = (movement: IMovement) => {
-    if(!verify(movement)) return;
+    const msg = verify(movement);
+    if(msg) return setError(msg);
     props.addMovement(movement);
     setView(READ);
+  };
+
+  const handleViewChange = (view: string) => {
+    setError("");
+    setView(view);
   };
 
   return (
@@ -58,13 +75,13 @@ const MovementController = (props: any) => {
         /> 
         <div className="button-list">
           <Button success
-            onClick={() => setView(NEW)}
+            onClick={() => handleViewChange(NEW)}
           >ADD</Button>
           <Button warning disabled={props.selected === null}
-            onClick={() => setView(EDIT)}
+            onClick={() => handleViewChange(EDIT)}
           >EDIT</Button>
           <Button danger disabled={props.selected === null}
-            onClick={() => setView(DELETE)}
+            onClick={() => handleViewChange(DELETE)}
           >DELETE</Button>
         </div>
       </>
@@ -72,21 +89,21 @@ const MovementController = (props: any) => {
       { view === NEW &&
         <MovementForm
           movement={null}
-          onBack={() => setView(READ)}
+          onBack={() => handleViewChange(READ)}
           onSave={save}
         />
       }
       { view === EDIT &&
         <MovementForm
           movement={props.movements.find(({id}: { id: number }) => id === props.selected)}
-          onBack={() => setView(READ)}
+          onBack={() => handleViewChange(READ)}
           onSave={save}
         />
       }
       { view === DELETE &&
         <Confirm
           onConfirm={() => remove(props.selected)}
-          onCancel={() => setView(READ)}
+          onCancel={() => handleViewChange(READ)}
           message={"Delete the selected movement?"}
         >
           <Movement 
@@ -95,6 +112,7 @@ const MovementController = (props: any) => {
           />
         </Confirm>
       }
+      {error}
     </div>
   );
 };

@@ -53,16 +53,16 @@ function App() {
 
   return (
     <main>
-      <MapContainer
-        selected={selected}
-        movements={movements}
-      />
       <MovementController
         movements={movements}
         selected={selected}
         setSelected={setSelected}
         addMovement={addMovement}
         removeMovement={removeMovement}
+      />
+      <MapContainer
+        selected={selected}
+        movements={movements}
       />
     </main>
   );
