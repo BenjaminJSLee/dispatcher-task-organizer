@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './App.scss';
+import DriverRoute from './components/DriverRoute';
 import MapContainer from './components/MapContainer';
 import MovementController from './components/MovementController';
 
@@ -62,6 +63,9 @@ function App() {
       />
       <MapContainer
         selected={selected}
+        movements={movements}
+      />
+      <DriverRoute 
         movements={movements}
       />
     </main>
