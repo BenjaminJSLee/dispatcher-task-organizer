@@ -13,7 +13,6 @@ const findPath = (movements: any) => {
 
   while (visited.length < movements.length * 2 - 1) {
     let top = results[results.length-1];
-    console.log(results);
     let next: any = {
       key: null,
       coord: null,

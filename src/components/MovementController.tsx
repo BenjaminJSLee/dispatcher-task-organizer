@@ -54,7 +54,7 @@ const MovementController = (props: any) => {
 
   const save = (movement: IMovement) => {
     const msg = verify(movement);
-    if(msg) return setError(msg);
+    if (msg) return setError(msg);
     props.addMovement(movement);
     setView(READ);
   };

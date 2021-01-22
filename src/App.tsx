@@ -12,12 +12,11 @@ interface ILatLng {
 const findPath = (movements: any) => {
   if (movements.length === 0) return [];
 
-  const visited: any = { length: 0, [`${movements[0].id}`]: true };
+  const visited: any = { length: 1, [`${movements[0].id}`]: true };
   const results = [ movements[0].start ];
-
-  while (visited.length < movements.length * 2 - 1) {
+  // length is multiplied by two to account for the two coordinates per movement
+  while (visited.length < movements.length * 2) {
     let top = results[results.length-1];
-    console.log(results);
     let next: any = {
       key: null,
       coord: null,
@@ -46,6 +45,7 @@ const findPath = (movements: any) => {
     visited.length++;
     visited[next.key] = true;
   }
+
   return results;
 };
 
@@ -81,12 +81,15 @@ const data = [
 ];
 
 let created_movements = 3;  // Would usually get an id from the DB
+const MOVEMENTS = "MOVEMENTS";
+const ROUTE = "ROUTE";
 
 function App() {
 
   const [selected, setSelected] = useState(null);
   const [movements, setMovements] = useState(data);
   const [driverRoute, setDriverRoute]: [any, any] = useState([]);
+  const [view, setView] = useState(MOVEMENTS);
 
   useEffect(() => {
     setDriverRoute(findPath(movements));
@@ -111,13 +114,18 @@ function App() {
 
   return (
     <main>
-      <MovementController
-        movements={movements}
-        selected={selected}
-        setSelected={setSelected}
-        addMovement={addMovement}
-        removeMovement={removeMovement}
-      />
+      { view === MOVEMENTS && 
+        <MovementController
+          movements={movements}
+          selected={selected}
+          setSelected={setSelected}
+          addMovement={addMovement}
+          removeMovement={removeMovement}
+        />
+      }
+      { view === ROUTE &&
+        "hi I'm a temporary string representing the route"
+      }
       <MapContainer
         selected={selected}
         movements={movements}
