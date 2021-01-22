@@ -158,6 +158,33 @@ const MapContainer  = (props: any) => {
     curMap.panToBounds(bounds);
   }, [paths, map]);
 
+  useEffect(() => {
+    if (map === null) return;
+    const line = new google.maps.Polyline({
+      path: props.driverRoute,
+      strokeOpacity: 0.25,
+      strokeWeight: 10,
+      strokeColor: "#ffffff",
+      icons: [{
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          fillColor: "#ffffff",
+          strokeColor: "#ffffff",
+          strokeOpacity: 1,
+          scale: 1
+        },
+        offset: '0',
+        repeat: '25px'
+      }],
+    });
+    line.setMap(map);
+    const animation = animatePath(line);
+    return () => {
+      clearInterval(animation);
+      line.setMap(null);
+    };
+  }, [props.driverRoute, map]);
+
   return (
     <div className="map-container">
       <Map
