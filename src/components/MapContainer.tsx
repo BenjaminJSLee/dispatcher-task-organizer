@@ -49,6 +49,7 @@ const createPath = (movement: any, map: any, maps: any) => {
   });
 
   return {
+    id: movement.id,
     line,
     start,
     end,
@@ -75,7 +76,7 @@ const renderPaths = (map: any, maps: any, movements: any) => {
 };
 
 const MapContainer  = (props: any) => {
-  const [paths, setPaths]: [{[key: number]: Path}, Function] = useState([]);
+  const [paths, setPaths]: [{[key: number]: Path}, Function] = useState({});
   const [map, setMap] = useState(null);
   const [maps, setMaps] = useState(null);
 
@@ -142,7 +143,20 @@ const MapContainer  = (props: any) => {
       curMap.panToBounds(bounds, 200);
       return () => clearInterval(animation);
     };
-  }, [props.selected, paths, map])
+  }, [props.selected, paths, map]);
+
+  useEffect(() => {
+    const curMap: any = map;
+    if (curMap === null) return;
+    const bounds = new google.maps.LatLngBounds();
+    for(const key in paths) {
+      const start = paths[key].start.getPosition();
+      const end = paths[key].end.getPosition();
+      if (start && end) bounds.extend(start).extend(end);
+    }
+    curMap.fitBounds(bounds);
+    curMap.panToBounds(bounds);
+  }, [paths, map]);
 
   return (
     <div className="map-container">
@@ -151,8 +165,8 @@ const MapContainer  = (props: any) => {
         bootstrapURLKeys={{ key: ""/* process.env.REACT_APP_MAPS_API_KEY */ }}
         defaultCenter={
           {
-            lat: -1.2884,
-            lng: 36.8233
+            lat: 0,
+            lng: 0,
           }
         }
         defaultZoom={14}
