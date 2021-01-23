@@ -59,6 +59,7 @@ const MovementController = (props: any) => {
     const msg = verify(movement);
     if (msg) return setError(msg);
     props.addMovement(movement);
+    setError("");
     setView(READ);
   };
 
