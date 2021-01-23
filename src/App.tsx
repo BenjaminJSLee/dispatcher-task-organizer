@@ -94,7 +94,8 @@ function App() {
   const [view, setView] = useState(MOVEMENTS);
 
   useEffect(() => {
-    setDriverRoute(findPath(movements));
+    const route = findPath(movements);
+    setDriverRoute(route);
   }, [movements]);
 
   const addMovement = (movement: any) => {

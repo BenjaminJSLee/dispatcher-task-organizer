@@ -71,7 +71,7 @@ const createRoute = (path: any[], map: any, vertices: boolean = true) => {
     markers.push(new google.maps.Marker({
       map,
       position: path[i],
-      title: "point",
+      title: `${i+1}`,
       label: `${i+1}`,
     }));
   }
