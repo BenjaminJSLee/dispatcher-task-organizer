@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.scss';
+import Button from './components/Button';
 import DriverRoute from './components/DriverRoute';
 import MapContainer from './components/MapContainer';
 import MovementController from './components/MovementController';
@@ -124,13 +125,29 @@ function App() {
         />
       }
       { view === ROUTE &&
-        "hi I'm a temporary string representing the route"
+        <DriverRoute 
+          movements={movements}
+          driverRoute={driverRoute}
+        />
       }
-      <MapContainer
-        selected={selected}
-        movements={movements}
-        driverRoute={driverRoute}
-      />
+      <div className="map-controller">
+        <MapContainer
+          view={view}
+          selected={selected}
+          movements={movements}
+          driverRoute={driverRoute}
+        />
+        <Button
+          onClick={() => setView(MOVEMENTS)}
+        >
+          {MOVEMENTS}
+        </Button>
+        <Button
+          onClick={() => setView(ROUTE)}
+        >
+          {ROUTE}
+        </Button>
+      </div>
     </main>
   );
 }

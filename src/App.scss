@@ -5,4 +5,8 @@ html {
 main {
   display: flex;
   flex-direction: row;
+  .map-controller {
+    display: flex;
+    flex-direction: column;
+  }
 }
