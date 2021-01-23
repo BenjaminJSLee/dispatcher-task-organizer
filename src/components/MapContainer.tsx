@@ -1,104 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import Map from 'google-map-react';
+
+import { Path, Paths } from '../ts-interfaces/interfaces';
+
+import {
+  createRoute,
+  animatePath,
+  renderPaths,
+} from '../helpers/map-ui';
+
 import './MapContainer.scss'
 
-interface Path {
-  start: google.maps.Marker,
-  end: google.maps.Marker,
-  line: google.maps.Polyline,
-}
-
-const createPath = (movement: any, map: any, maps: any) => {
-  const line = new maps.Polyline({
-    map,
-    path: [movement.start, movement.end],
-    strokeOpacity: 1,
-    strokeColor: movement.color,
-    icons: [{
-      icon: {
-        path: 'M -0.75,0 0,-1.5 0.75,0 Z',
-        strokeColor: movement.color,
-        strokeOpacity: 1,
-        scale: 4
-      },
-      offset: '0',
-      repeat: '25px'
-    }],
-  });
-  const start = new google.maps.Marker({
-    map,
-    position: movement.start,
-    title: "start",
-    label: "S",
-  });
-  const end = new google.maps.Marker({
-    map,
-    position: movement.end,
-    title: "end",
-    label: "E",
-  });
-
-  return {
-    id: movement.id,
-    line,
-    start,
-    end,
-  };
-};
-
-const createRoute = (path: any[], map: any, vertices: boolean = true) => {
-  const line = new google.maps.Polyline({
-    map,
-    path,
-    strokeOpacity: 0.25,
-    strokeWeight: 8,
-    strokeColor: "#ffffff",
-    icons: [{
-      icon: {
-        path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
-        fillColor: "#ffffff",
-        strokeColor: "#ffffff",
-        strokeOpacity: 1,
-        scale: 1
-      },
-      offset: '0',
-      repeat: '25px'
-    }],
-  });
-  if (!vertices) return { line, markers: [] };
-  const markers = [];
-  for (let i = 0; i < path.length; i++) {
-    markers.push(new google.maps.Marker({
-      map,
-      position: path[i],
-      title: `${i+1}`,
-      label: `${i+1}`,
-    }));
-  }
-  return { line, markers };
-};
-
-const animatePath = (line: google.maps.Polyline) => {
-  let count = 100;
-  return setInterval(() => {
-    count = (count + 1) % 100;
-
-    const icons = line.get("icons");
-    icons[0].offset = count + "px";
-    line.set("icons", icons);
-  }, 25);
-};
-
-const renderPaths = (map: any, maps: any, movements: any) => {
-  const pathObject: {[key: number]: Path} = {};
-  for (const movement of movements) {
-    pathObject[movement.id] = createPath(movement, map, maps);
-  }
-  return pathObject;
-};
-
 const MapContainer  = (props: any) => {
-  const [paths, setPaths]: [{[key: number]: Path}, Function] = useState({});
+  const [paths, setPaths]: [Paths, Function] = useState({});
   const [map, setMap] = useState(null);
   const [maps, setMaps] = useState(null);
   
@@ -111,7 +25,7 @@ const MapContainer  = (props: any) => {
   useEffect(() => {
     if (map === null || maps === null || (props.view !== "ALL" && props.view !== "MOVEMENTS")) return;
 
-    setPaths((prev: {[key: number]: Path}) => {
+    setPaths((prev: Paths) => {
       for (const id in prev) {
         const path: Path = prev[id];
         path.start.setMap(null);
@@ -124,7 +38,7 @@ const MapContainer  = (props: any) => {
     setPaths(renderPaths(map, maps, props.movements));
 
     return () => {
-      setPaths((prev: {[key: number]: Path}) => {
+      setPaths((prev: Paths) => {
         for (const id in prev) {
           const path: Path = prev[id];
           path.start.setMap(null);
@@ -184,7 +98,7 @@ const MapContainer  = (props: any) => {
     <div className="map-container">
       <Map
         yesIWantToUseGoogleMapApiInternals
-        bootstrapURLKeys={{ key: ""/* process.env.REACT_APP_MAPS_API_KEY */ }}
+        bootstrapURLKeys={{ key: process.env.REACT_APP_MAPS_API_KEY || "" }}
         defaultCenter={
           {
             lat: 0,

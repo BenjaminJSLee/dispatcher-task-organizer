@@ -3,9 +3,11 @@ import Button from './Button';
 
 import './MovementForm.scss';
 
+import { IMovement } from '../ts-interfaces/interfaces';
+
 const MovementForm = (props: any) => {
 
-  const [opts, setOpts] = useState(props.movement || {
+  const [opts, setOpts]: [IMovement, Function] = useState(props.movement || {
     id: null,
     start: { lat: 0, lng: 0 },
     end: { lat: 0, lng: 0 },
@@ -14,7 +16,7 @@ const MovementForm = (props: any) => {
   });
 
   const handleChange = (change: string | number, target: string) => {
-    setOpts((prev: any) => {
+    setOpts((prev: IMovement) => {
       let key = "";
       let val = null;
       switch (target) {
@@ -51,7 +53,7 @@ const MovementForm = (props: any) => {
     });
   };
 
-  const cleanInput = (opts: any) => {
+  const cleanInput = (opts: IMovement) => {
     const cleanedOpts = { ...opts };
     cleanedOpts.start = { lat: Number(opts.start.lat), lng: Number(opts.start.lng) };
     cleanedOpts.end = { lat: Number(opts.end.lat), lng: Number(opts.end.lng) };

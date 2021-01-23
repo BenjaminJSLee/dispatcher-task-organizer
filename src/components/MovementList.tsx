@@ -2,9 +2,11 @@ import React from 'react';
 import Movement from './Movement';
 import './MovementList.scss';
 
+import { IMovement } from '../ts-interfaces/interfaces';
+
 const MovementList = (props: any) => {
 
-  const movements = props.movements.map((movement: any) => {
+  const movements = props.movements.map((movement: IMovement) => {
     return (
       <Movement
         key={movement.id}

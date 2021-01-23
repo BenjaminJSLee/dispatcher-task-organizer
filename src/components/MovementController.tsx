@@ -8,24 +8,12 @@ import './MovementController.scss';
 import Confirm from './Confirm';
 import MovementForm from './MovementForm';
 
+import { IMovement } from '../ts-interfaces/interfaces';
+
 const READ = "READ";
 const EDIT = "EDIT";
 const NEW = "NEW";
 const DELETE = "DELETE";
-
-interface ILatLng {
-  lat: number;
-  lng: number;
-}
-
-interface IMovement {
-  id: number,
-  start: ILatLng,
-  end: ILatLng,
-  description: string,
-  color: string;
-
-}
 
 const areMovementsEqual = (a: IMovement, b: IMovement) => {
   const sameStart = a.start.lat === b.start.lat && a.start.lng === b.start.lng;

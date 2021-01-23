@@ -1,19 +1,7 @@
 import React from 'react';
 import './Movement.scss';
 
-interface ILatLng {
-  lat: number;
-  lng: number;
-}
-
-interface IMovement {
-  id: number,
-  start: ILatLng,
-  end: ILatLng,
-  description: string,
-  color: string;
-
-}
+import { ILatLng, IMovement } from '../ts-interfaces/interfaces';
 
 const Movement = (props: { onClick: any, selected?: boolean, movement: IMovement}) => {
 

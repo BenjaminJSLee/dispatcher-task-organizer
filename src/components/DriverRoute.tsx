@@ -1,10 +1,6 @@
 import React from 'react';
 import './DriverRoute.scss';
-
-interface ILatLng {
-  lat: number;
-  lng: number;
-}
+import { ILatLng } from '../ts-interfaces/interfaces';
 
 const DriverRoute = (props: any) => {
 
