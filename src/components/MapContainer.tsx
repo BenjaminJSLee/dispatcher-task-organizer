@@ -22,7 +22,7 @@ const createPath = (movement: any, map: any, maps: any) => {
         scale: 4
       },
       offset: '0',
-      repeat: '20px'
+      repeat: '25px'
     }],
   });
   const start = new google.maps.Marker({
@@ -46,7 +46,7 @@ const createPath = (movement: any, map: any, maps: any) => {
   };
 };
 
-const createRoute = (path: any[], map: any) => {
+const createRoute = (path: any[], map: any, vertices: boolean = true) => {
   const line = new google.maps.Polyline({
     map,
     path,
@@ -65,6 +65,7 @@ const createRoute = (path: any[], map: any) => {
       repeat: '25px'
     }],
   });
+  if (!vertices) return { line, markers: [] };
   const markers = [];
   for (let i = 0; i < path.length; i++) {
     markers.push(new google.maps.Marker({
@@ -108,7 +109,7 @@ const MapContainer  = (props: any) => {
 
   // set movements markers and paths on map
   useEffect(() => {
-    if (map === null || maps === null || props.view !== "MOVEMENTS") return;
+    if (map === null || maps === null || (props.view !== "ALL" && props.view !== "MOVEMENTS")) return;
 
     setPaths((prev: {[key: number]: Path}) => {
       for (const id in prev) {
@@ -167,8 +168,8 @@ const MapContainer  = (props: any) => {
 
   // sets driver route path on the map
   useEffect(() => {
-    if (map === null || props.view !== "ROUTE") return;
-    const { line, markers } = createRoute(props.driverRoute, map);
+    if (map === null || (props.view !== "ALL" && props.view !== "ROUTE")) return;
+    const { line, markers } = createRoute(props.driverRoute, map, props.view !== "ALL");
     const animation = animatePath(line);
     return () => {
       clearInterval(animation);

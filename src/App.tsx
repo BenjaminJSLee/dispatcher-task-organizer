@@ -84,6 +84,7 @@ const data = [
 let created_movements = 3;  // Would usually get an id from the DB
 const MOVEMENTS = "MOVEMENTS";
 const ROUTE = "ROUTE";
+const ALL = "ALL";
 
 function App() {
 
@@ -120,7 +121,7 @@ function App() {
 
   return (
     <main>
-      { view === MOVEMENTS && 
+      { (view === MOVEMENTS || view === ALL) && 
         <MovementController
           movements={movements}
           selected={selected}
@@ -154,6 +155,12 @@ function App() {
             onClick={() => handleViewChange(ROUTE)}
           >
             {ROUTE}
+          </Button>
+          <Button tab
+            selected={view === ALL}
+            onClick={() => handleViewChange(ALL)}
+          >
+            {ALL}
           </Button>
         </div>
       </div>
