@@ -1,5 +1,17 @@
 import { IMovement, ILatLng } from '../ts-interfaces/interfaces';
 
+/** Function findPath takes an array of movements (movement: two coordinates) 
+ * and calculates a route in which each coordinate is visited. The stipulation
+ * for finding this path is that each movement contains a start and an end point,
+ * and the start point must be visited first before its corresponding end point,
+ * otherwise the endpoint is not counted as "visited".
+ * 
+ * The route is returned as an array of lat-long coordinates, where the first
+ * coordinate is the starting point and the last coordinate is the ending point.
+ * 
+ * @param movements array of movements
+ * @returns array of coordinates
+ */
 const findPath = (movements: IMovement[]) => {
   if (movements.length === 0) return [];
 
@@ -12,6 +24,7 @@ const findPath = (movements: IMovement[]) => {
       key: null,
       coord: null,
     };
+    // used to compare distance difference between the last coord and all other coords
     let minDist = Number.MAX_VALUE;
     for (const movement of movements) {
       const {id, start, end} = movement;
@@ -30,6 +43,7 @@ const findPath = (movements: IMovement[]) => {
         }
       }
     }
+    // checks to see if the next coord is the same as the last coord
     if (!(next.coord.lat === top.lat && next.coord.lng === top.lng)) {
       results.push(next.coord);
     }
