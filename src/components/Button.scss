@@ -44,6 +44,13 @@
       background-color: #ffaa00;
     }
   }
+  &.button--tab {
+    border-radius: 0;
+  }
+  &.button--selected {
+    filter: brightness(75%);
+    pointer-events: none;
+  }
   &.button--disabled {
     color: #cccccc;
     background-color: #999999;

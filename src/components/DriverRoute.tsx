@@ -26,8 +26,6 @@ const DriverRoute = (props: any) => {
       <div className="path-list">
         {route}
       </div>
-      <div className="button-list">
-      </div>
     </div>
   );
 };

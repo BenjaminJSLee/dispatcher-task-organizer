@@ -137,16 +137,20 @@ function App() {
           movements={movements}
           driverRoute={driverRoute}
         />
-        <Button
-          onClick={() => setView(MOVEMENTS)}
-        >
-          {MOVEMENTS}
-        </Button>
-        <Button
-          onClick={() => setView(ROUTE)}
-        >
-          {ROUTE}
-        </Button>
+        <div className="tabs">
+          <Button tab
+            selected={view === MOVEMENTS}
+            onClick={() => setView(MOVEMENTS)}
+          >
+            {MOVEMENTS}
+          </Button>
+          <Button tab
+            selected={view === ROUTE}
+            onClick={() => setView(ROUTE)}
+          >
+            {ROUTE}
+          </Button>
+        </div>
       </div>
     </main>
   );

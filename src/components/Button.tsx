@@ -8,6 +8,8 @@ const Button = (props: any) => {
     'button--danger': props.danger,
     'button--success': props.success,
     'button--warning': props.warning,
+    'button--tab': props.tab,
+    'button--selected': props.selected,
  });
   return (
     <button type="button" disabled={props.disabled} className={buttonClass} onClick={props.onClick}>
