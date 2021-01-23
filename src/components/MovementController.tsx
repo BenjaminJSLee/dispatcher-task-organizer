@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import MovementList from './MovementList';
 import Movement from './Movement';
 import Button from './Button';
+import Error from './Error';
 
 import './MovementController.scss';
 import Confirm from './Confirm';
@@ -39,9 +40,11 @@ const MovementController = (props: any) => {
   const [error, setError] = useState("");
 
   const verify = (movement: IMovement) => {
-    if (movement.start.lat === movement.end.lat && movement.start.lng === movement.end.lng) return "starting and ending points cannot be the same";
+    if (movement.start.lat === movement.end.lat && movement.start.lng === movement.end.lng) {
+      return "Starting and ending points cannot be the same coordinates";
+    }
     const found = props.movements.find((m: IMovement) => m.id !== movement.id && areMovementsEqual(m, movement));
-    if (found) return "given movement data already exists";
+    if (found) return "Given movement data already exists";
     return "";
   };
 
@@ -112,7 +115,10 @@ const MovementController = (props: any) => {
           />
         </Confirm>
       }
-      {error}
+      <Error 
+        hidden={!error}
+        clear={() => setError("")}
+      >Error: {error}</Error>
     </div>
   );
 };

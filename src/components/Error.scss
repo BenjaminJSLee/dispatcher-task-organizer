@@ -1,0 +1,18 @@
+.error {
+  font-weight: bold;
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: white;
+  background-color: #dd6655;
+  padding: 0.2rem;
+  border: 0.2em solid #ff6655;
+  border-radius: 0.25rem;
+  margin: auto;
+  cursor: pointer;
+  > * {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
+}
