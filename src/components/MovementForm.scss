@@ -38,6 +38,11 @@
     border-radius: 0.25em;
     resize: none;
     outline: none;
+
+    &[type="color"] {
+      padding: 0;
+    }
+
     &:hover {
       border-color: #888888;
     }

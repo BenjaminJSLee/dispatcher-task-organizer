@@ -101,7 +101,7 @@ function App() {
     setMovements((prev: any) => {
       return [
         { ...movement, id, },
-        ...prev.filter((movement: any) => movement.id !== id),
+        ...prev.filter((m: any) => m.id !== id),
       ];
     });
 

@@ -30,22 +30,12 @@ const createPath = (movement: any, map: any, maps: any) => {
     position: movement.start,
     title: "start",
     label: "S",
-    animation: google.maps.Animation.DROP,
-    // icon: {
-    //   path: google.maps.SymbolPath.CIRCLE,
-    //   scale: 7,
-    // },
   });
   const end = new google.maps.Marker({
     map,
     position: movement.end,
     title: "end",
     label: "E",
-    animation: google.maps.Animation.DROP,
-    // icon: {
-    //   path: google.maps.SymbolPath.CIRCLE,
-    //   scale: 7,
-    // },
   });
 
   return {
@@ -56,6 +46,37 @@ const createPath = (movement: any, map: any, maps: any) => {
   };
 };
 
+const createRoute = (path: any[], map: any) => {
+  const line = new google.maps.Polyline({
+    map,
+    path,
+    strokeOpacity: 0.25,
+    strokeWeight: 8,
+    strokeColor: "#ffffff",
+    icons: [{
+      icon: {
+        path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+        fillColor: "#ffffff",
+        strokeColor: "#ffffff",
+        strokeOpacity: 1,
+        scale: 1
+      },
+      offset: '0',
+      repeat: '25px'
+    }],
+  });
+  const markers = [];
+  for (let i = 0; i < path.length; i++) {
+    markers.push(new google.maps.Marker({
+      map,
+      position: path[i],
+      title: "point",
+      label: `${i+1}`,
+    }));
+  }
+  return { line, markers };
+};
+
 const animatePath = (line: google.maps.Polyline) => {
   let count = 100;
   return setInterval(() => {
@@ -64,7 +85,7 @@ const animatePath = (line: google.maps.Polyline) => {
     const icons = line.get("icons");
     icons[0].offset = count + "px";
     line.set("icons", icons);
-  }, 40);
+  }, 25);
 };
 
 const renderPaths = (map: any, maps: any, movements: any) => {
@@ -85,6 +106,7 @@ const MapContainer  = (props: any) => {
     setMaps(maps);
   };
 
+  // set movements markers and paths on map
   useEffect(() => {
     if (map === null || maps === null || props.view !== "MOVEMENTS") return;
 
@@ -114,6 +136,7 @@ const MapContainer  = (props: any) => {
 
   }, [props.movements, props.view, map, maps]);
 
+  // sets boundaries for the map to view a selected movement
   useEffect(() => {
     const curMap: any = map;
     const path = paths[props.selected];
@@ -128,6 +151,7 @@ const MapContainer  = (props: any) => {
     };
   }, [props.selected, paths, map]);
 
+  // sets boundaries for the entire map view (including all markers and paths)
   useEffect(() => {
     const curMap: any = map;
     if (curMap === null) return;
@@ -141,30 +165,17 @@ const MapContainer  = (props: any) => {
     curMap.panToBounds(bounds);
   }, [paths, map, props.view]);
 
+  // sets driver route path on the map
   useEffect(() => {
     if (map === null || props.view !== "ROUTE") return;
-    const line = new google.maps.Polyline({
-      path: props.driverRoute,
-      strokeOpacity: 0.25,
-      strokeWeight: 8,
-      strokeColor: "#ffffff",
-      icons: [{
-        icon: {
-          path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
-          fillColor: "#ffffff",
-          strokeColor: "#ffffff",
-          strokeOpacity: 1,
-          scale: 1
-        },
-        offset: '0',
-        repeat: '25px'
-      }],
-    });
-    line.setMap(map);
+    const { line, markers } = createRoute(props.driverRoute, map);
     const animation = animatePath(line);
     return () => {
       clearInterval(animation);
       line.setMap(null);
+      for(const marker of markers) {
+        marker.setMap(null);
+      }
     };
   }, [props.driverRoute, props.view, map]);
 
