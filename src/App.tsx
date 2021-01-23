@@ -113,6 +113,11 @@ function App() {
     setSelected(null);
   };
 
+  const handleViewChange = (view: string) => {
+    setSelected(null);
+    setView(view);
+  };
+
   return (
     <main>
       { view === MOVEMENTS && 
@@ -140,13 +145,13 @@ function App() {
         <div className="tabs">
           <Button tab
             selected={view === MOVEMENTS}
-            onClick={() => setView(MOVEMENTS)}
+            onClick={() => handleViewChange(MOVEMENTS)}
           >
             {MOVEMENTS}
           </Button>
           <Button tab
             selected={view === ROUTE}
-            onClick={() => setView(ROUTE)}
+            onClick={() => handleViewChange(ROUTE)}
           >
             {ROUTE}
           </Button>

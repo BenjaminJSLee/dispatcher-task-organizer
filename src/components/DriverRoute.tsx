@@ -13,9 +13,9 @@ const DriverRoute = (props: any) => {
       <div key={i} className="place">
         <span className="place--number">{i+1}</span>
         <div className="place--description">
-          {coord.lat}
+          Latitude: {coord.lat}
           <br/>
-          {coord.lng}
+          Longitude: {coord.lng}
         </div>
       </div>
     );

@@ -79,35 +79,6 @@ const MapContainer  = (props: any) => {
   const [paths, setPaths]: [{[key: number]: Path}, Function] = useState({});
   const [map, setMap] = useState(null);
   const [maps, setMaps] = useState(null);
-
-  const updatePath = (movement: any) => {
-    setPaths((prev: {[key: number]: Path}) => {
-      const { start, end, line } = prev[movement.id];
-      start.setPosition(movement.start);
-      end.setPosition(movement.end);
-      return {
-        ...prev,
-        [movement.id]: {
-          start,
-          end,
-          line,
-        }
-      };
-    });
-  };
-  
-  const deletePath = (id: number) => {
-    setPaths((prev: {[key: number]: Path}) => {
-      const path: Path = prev[id];
-      path.start.setMap(null);
-      path.end.setMap(null);
-      path.line.setMap(null);
-      return {
-        ...prev,
-        [id]: undefined,
-      };
-    });
-  };
   
   const handleAPILoaded = (map: any, maps: any) => {
     setMap(map);
@@ -115,7 +86,7 @@ const MapContainer  = (props: any) => {
   };
 
   useEffect(() => {
-    if (map === null || maps === null) return;
+    if (map === null || maps === null || props.view !== "MOVEMENTS") return;
 
     setPaths((prev: {[key: number]: Path}) => {
       for (const id in prev) {
@@ -129,7 +100,19 @@ const MapContainer  = (props: any) => {
 
     setPaths(renderPaths(map, maps, props.movements));
 
-  }, [props.movements, map, maps]);
+    return () => {
+      setPaths((prev: {[key: number]: Path}) => {
+        for (const id in prev) {
+          const path: Path = prev[id];
+          path.start.setMap(null);
+          path.end.setMap(null);
+          path.line.setMap(null);
+        }
+        return prev;
+      });
+    };
+
+  }, [props.movements, props.view, map, maps]);
 
   useEffect(() => {
     const curMap: any = map;
@@ -156,18 +139,18 @@ const MapContainer  = (props: any) => {
     }
     curMap.fitBounds(bounds);
     curMap.panToBounds(bounds);
-  }, [paths, map]);
+  }, [paths, map, props.view]);
 
   useEffect(() => {
-    if (map === null) return;
+    if (map === null || props.view !== "ROUTE") return;
     const line = new google.maps.Polyline({
       path: props.driverRoute,
       strokeOpacity: 0.25,
-      strokeWeight: 10,
+      strokeWeight: 8,
       strokeColor: "#ffffff",
       icons: [{
         icon: {
-          path: google.maps.SymbolPath.CIRCLE,
+          path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
           fillColor: "#ffffff",
           strokeColor: "#ffffff",
           strokeOpacity: 1,
@@ -183,7 +166,7 @@ const MapContainer  = (props: any) => {
       clearInterval(animation);
       line.setMap(null);
     };
-  }, [props.driverRoute, map]);
+  }, [props.driverRoute, props.view, map]);
 
   return (
     <div className="map-container">
