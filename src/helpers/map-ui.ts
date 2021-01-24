@@ -34,6 +34,7 @@ const createPath = (movement: IMovement, map: any, maps: any) => {
     title: "start",
     label: "S",
     icon,
+    zIndex: 2,
   });
   const end = new google.maps.Marker({
     map,
@@ -41,6 +42,7 @@ const createPath = (movement: IMovement, map: any, maps: any) => {
     title: "end",
     label: "E",
     icon,
+    zIndex: 1,
   });
 
   return {
@@ -99,9 +101,6 @@ const animatePath = (line: google.maps.Polyline) => {
     const icons = line.get("icons");
     icons[0].offset = count + "px";
     line.set("icons", icons);
-    line.setOptions({
-      zIndex: 100,
-    });
   }, 25);
 };
 
