@@ -1,5 +1,7 @@
 # Dispatcher Task Organizer
 
+Dispatcher Task Organizer (name-pending) gives users the ability to manage the pick-up and drop-off locations of goods for delivery. A user can create new pick-ups/drop-offs, and can generate a route in which a driver can follow to pick-up and drop-off all deliveries.
+
 ## Dependencies
 - google-map-react: 2.1.9
 - node-sass: 4.14.1
