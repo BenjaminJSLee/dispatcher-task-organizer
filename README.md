@@ -1,3 +1,22 @@
+# Dispatcher Task Organizer
+
+## Dependencies
+- google-map-react: 2.1.9
+- node-sass: 4.14.1
+- react: 17.0.1
+- react-dom: 17.0.1
+- react-scripts: 4.0.1
+- typescript: 4.1.3
+  - @types/googlemaps: ^3.43.2
+  - @types/google-map-react: ^2.1.0
+  - @types/jest: ^26.0.20
+  - @types/node: ^12.19.14
+  - @types/react: ^16.14.2
+  - @types/react-dom: ^16.9.10
+---
+### Since this app was created using create-react-app, below is the default instructions to testing/deploying this app:
+---
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
