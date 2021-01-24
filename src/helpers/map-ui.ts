@@ -60,6 +60,7 @@ const createRoute = (path: ILatLng[], map: any, vertices: boolean = true) => {
     strokeOpacity: 0.25,
     strokeWeight: 8,
     strokeColor: "#000000",
+    zIndex: 101,
     icons: [{
       icon: {
         path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
