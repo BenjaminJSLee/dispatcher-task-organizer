@@ -58,11 +58,21 @@ const MapContainer  = (props: any) => {
     if (path !== undefined && curMap !== null) {
       const start: any = path.start.getPosition();
       const end: any = path.end.getPosition();
+      path.start.setOptions({ zIndex: 100 });
+      path.end.setOptions({ zIndex: 100 });
+      path.line.setOptions({ zIndex: 100 });
       const animation = animatePath(path.line);
       const bounds = new google.maps.LatLngBounds(start).extend(end);
       curMap.fitBounds(bounds);
       curMap.panToBounds(bounds, 200);
-      return () => clearInterval(animation);
+      return () => {
+        clearInterval(animation);
+        path.start.setOptions({ zIndex: 2 });
+        path.end.setOptions({ zIndex: 1 });
+        path.line.setOptions({
+          zIndex: 1,
+        });
+      };
     };
   }, [props.selected, paths, map]);
 
