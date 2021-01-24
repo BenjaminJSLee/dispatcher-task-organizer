@@ -29,6 +29,14 @@ Dispatcher Task Organizer (name-pending) gives users the ability to manage the p
   - @types/react: ^16.14.2
   - @types/react-dom: ^16.9.10
 ---
+## Running this app
+1. Make sure Node.js is installed locally
+2. Fork or clone this repository anywhere in your local filesystem
+3. Change directory (cd) into the repository
+4. Install all dependencies by running ```npm i``` in your terminal/command-prompt
+5. Run ```npm start``` to run the app in development mode. If you wish to deploy the app, refer to the instructions below for create-react-app.
+
+---
 ### Since this app was created using create-react-app, below is the default instructions to testing/deploying this app:
 ---
 
