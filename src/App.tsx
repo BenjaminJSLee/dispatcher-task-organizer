@@ -10,7 +10,7 @@ import { findPath } from './helpers/path-finding';
 import { ILatLng, IMovement } from './ts-interfaces/interfaces';
 import data from './data/init-data.json';
 
-let created_movements = 3;  // Would usually get an id from the DB
+let created_movements = data.length;  // Would usually get an id from the DB
 const MOVEMENTS = "MOVEMENTS";
 const ROUTE = "ROUTE";
 const ALL = "ALL";
