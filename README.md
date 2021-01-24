@@ -2,6 +2,19 @@
 
 Dispatcher Task Organizer (name-pending) gives users the ability to manage the pick-up and drop-off locations of goods for delivery. A user can create new pick-ups/drop-offs, and can generate a route in which a driver can follow to pick-up and drop-off all deliveries.
 
+## App Preview
+![view](https://github.com/BenjaminJSLee/dispatcher-task-organizer/blob/main/docs/view.png?raw=true)
+---
+![select](https://github.com/BenjaminJSLee/dispatcher-task-organizer/blob/main/docs/select.png?raw=true)
+---
+![create](https://github.com/BenjaminJSLee/dispatcher-task-organizer/blob/main/docs/create.png?raw=true)
+---
+![delete](https://github.com/BenjaminJSLee/dispatcher-task-organizer/blob/main/docs/delete.png?raw=true)
+---
+![route](https://github.com/BenjaminJSLee/dispatcher-task-organizer/blob/main/docs/route.png?raw=true)
+---
+![view&route](https://github.com/BenjaminJSLee/dispatcher-task-organizer/blob/main/docs/view&route.png?raw=true)
+---
 ## Dependencies
 - google-map-react: 2.1.9
 - node-sass: 4.14.1
