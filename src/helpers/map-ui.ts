@@ -10,7 +10,7 @@ const createPath = (movement: IMovement, map: any, maps: any) => {
     anchor: new google.maps.Point(0,0),
     strokeWeight: 3,
     scale: 0.5
-}
+  }
 
   const line = new maps.Polyline({
     map,
@@ -72,13 +72,21 @@ const createRoute = (path: ILatLng[], map: any, vertices: boolean = true) => {
   });
   if (!vertices) return { line, markers: [] };
   const markers = [];
+  const visited: any = {};
   for (let i = 0; i < path.length; i++) {
-    markers.push(new google.maps.Marker({
-      map,
-      position: path[i],
-      title: `${i+1}`,
-      label: `${i+1}`,
-    }));
+    if (!visited[`${path[i].lat}-${path[i].lng}`]) {
+      const marker = new google.maps.Marker({
+        map,
+        position: path[i],
+        title: `${i+1}`,
+        label: `${i+1}`,
+      })
+      markers.push(marker);
+      visited[`${path[i].lat}-${path[i].lng}`] = marker;
+    } else {
+      const marker = visited[`${path[i].lat}-${path[i].lng}`];
+      marker.setLabel(`${marker.getLabel()}/${i+1}`);
+    }
   }
   return { line, markers };
 };
