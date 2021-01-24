@@ -1,6 +1,17 @@
-import { ILatLng, Paths } from '../ts-interfaces/interfaces';
+import { ILatLng, Paths, IMovement } from '../ts-interfaces/interfaces';
 
-const createPath = (movement: any, map: any, maps: any) => {
+const createPath = (movement: IMovement, map: any, maps: any) => {
+
+  const icon = {
+    path: "M-20,0 a20,20 0 1,0 40,0 a20,20 0 1,0 -40,0",
+    fillColor: "#f7f7f7",
+    strokeColor: movement.color,
+    fillOpacity: 1,
+    anchor: new google.maps.Point(0,0),
+    strokeWeight: 3,
+    scale: 0.5
+}
+
   const line = new maps.Polyline({
     map,
     path: [movement.start, movement.end],
@@ -22,12 +33,14 @@ const createPath = (movement: any, map: any, maps: any) => {
     position: movement.start,
     title: "start",
     label: "S",
+    icon,
   });
   const end = new google.maps.Marker({
     map,
     position: movement.end,
     title: "end",
     label: "E",
+    icon,
   });
 
   return {
@@ -78,10 +91,13 @@ const animatePath = (line: google.maps.Polyline) => {
     const icons = line.get("icons");
     icons[0].offset = count + "px";
     line.set("icons", icons);
+    line.setOptions({
+      zIndex: 100,
+    });
   }, 25);
 };
 
-const renderPaths = (map: any, maps: any, movements: any) => {
+const renderPaths = (map: any, maps: any, movements: IMovement[]) => {
   const pathObject: Paths = {};
   for (const movement of movements) {
     pathObject[movement.id] = createPath(movement, map, maps);
