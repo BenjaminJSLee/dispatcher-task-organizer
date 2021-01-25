@@ -86,8 +86,16 @@ const MapContainer  = (props: any) => {
       const end = paths[key].end.getPosition();
       if (start && end) bounds.extend(start).extend(end);
     }
-    curMap.fitBounds(bounds);
-    curMap.panToBounds(bounds);
+    if (bounds.isEmpty()) {
+      curMap.setCenter({
+        lat: 56.1304,
+        lng: -106.3468,
+      });
+      curMap.setZoom(1);
+    } else {
+      curMap.fitBounds(bounds);
+      curMap.panToBounds(bounds);
+    }
   }, [paths, map, props.view]);
 
   // sets driver route path on the map
@@ -111,11 +119,11 @@ const MapContainer  = (props: any) => {
         bootstrapURLKeys={{ key: process.env.REACT_APP_MAPS_API_KEY || "" }}
         defaultCenter={
           {
-            lat: 0,
-            lng: 0,
+            lat: 56.1304,
+            lng: -106.3468,
           }
         }
-        defaultZoom={14}
+        defaultZoom={1}
         onGoogleApiLoaded={({ map, maps }) => handleAPILoaded(map, maps)}
       >
       </Map>
