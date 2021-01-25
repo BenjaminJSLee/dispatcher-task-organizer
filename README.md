@@ -2,6 +2,19 @@
 
 Dispatcher Task Organizer (name-pending) gives users the ability to manage the pick-up and drop-off locations of goods for delivery. A user can create new pick-ups/drop-offs, and can generate a route in which a driver can follow to pick-up and drop-off all deliveries.
 
+## App Preview
+![view](https://github.com/BenjaminJSLee/dispatcher-task-organizer/blob/main/docs/view.png?raw=true)
+---
+![select](https://github.com/BenjaminJSLee/dispatcher-task-organizer/blob/main/docs/select.png?raw=true)
+---
+![create](https://github.com/BenjaminJSLee/dispatcher-task-organizer/blob/main/docs/create.png?raw=true)
+---
+![delete](https://github.com/BenjaminJSLee/dispatcher-task-organizer/blob/main/docs/delete.png?raw=true)
+---
+![route](https://github.com/BenjaminJSLee/dispatcher-task-organizer/blob/main/docs/route.png?raw=true)
+---
+![view&route](https://github.com/BenjaminJSLee/dispatcher-task-organizer/blob/main/docs/view&route.png?raw=true)
+---
 ## Dependencies
 - google-map-react: 2.1.9
 - node-sass: 4.14.1
@@ -15,6 +28,14 @@ Dispatcher Task Organizer (name-pending) gives users the ability to manage the p
   - @types/node: ^12.19.14
   - @types/react: ^16.14.2
   - @types/react-dom: ^16.9.10
+---
+## Running this app
+1. Make sure Node.js is installed locally
+2. Fork or clone this repository anywhere in your local filesystem
+3. Change directory (cd) into the repository
+4. Install all dependencies by running ```npm i``` in your terminal/command-prompt
+5. Run ```npm start``` to run the app in development mode. If you wish to deploy the app, refer to the instructions below for create-react-app.
+
 ---
 ### Since this app was created using create-react-app, below is the default instructions to testing/deploying this app:
 ---
